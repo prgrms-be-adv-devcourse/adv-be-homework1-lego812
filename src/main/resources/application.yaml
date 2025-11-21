@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: homework
+
+api:
+  v1: /api/v1
