@@ -4,8 +4,6 @@ package com.example.homework.controller;
 import com.example.homework.entity.ResponseEntity;
 import com.example.homework.entity.PurchaseOrder;
 import com.example.homework.service.OrderService;
-import com.example.homework.order.application.dto.OrderInfo;
-import com.example.homework.order.presentation.dto.OrderRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -32,16 +30,16 @@ public class OrderController {
         return orderService.findAll(pageable);
     }
 
-    @Operation(summary = "주문 상태 변경", description = "주문의 상태를 변경한다.")
+    @Operation(summary = "주문 상태 변경", description = "주문의 상태를 지불로 변경한다.")
     @GetMapping("{id}/paid")
-    public ResponseEntity<PurchaseOrder>> findAll(@PathVariable String id) {
+    public ResponseEntity<PurchaseOrder> paid(@PathVariable String id) {
         return orderService.paid(id);
     }
 
 
     @Operation(summary = "주문 취소 ", description = "주문의 상태를 취소로 변경한다.")
-    @GetMapping("{id}/paid")
-    public ResponseEntity<Void> findAll(@PathVariable String id) {
+    @GetMapping("{id}/cancel")
+    public ResponseEntity<PurchaseOrder> cancel(@PathVariable String id) {
         return orderService.cancel(id);
     }
 }
