@@ -1,4 +1,4 @@
-package com.example.homework.entity;
+package com.example.homework.order.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,9 +13,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
 @Entity
 @Table(name = "\"purchase_order\"", schema = "public")
+@Data //원래는 setter를 숨기지만 test의 편리함을 위해 setter허용
 public class PurchaseOrder {
 
     @Id
@@ -48,6 +48,12 @@ public class PurchaseOrder {
         this.status = PurchaseOrderStatus.PAID;
     }
 
+    public void markCancelled() {
+        this.status = PurchaseOrderStatus.CANCELLED;
+    }
+
+    protected PurchaseOrder() {}
+
     private PurchaseOrder(UUID productId, UUID memberId, BigDecimal amount, UUID sellerId) {
         this.id = UUID.randomUUID();
         this.productId = productId;
@@ -57,8 +63,14 @@ public class PurchaseOrder {
         this.amount = BigDecimal.ZERO;
     }
 
-    public PurchaseOrder create(UUID productId, UUID memberId, BigDecimal amount, UUID sellerId){
+
+
+    public static PurchaseOrder create(UUID productId, UUID memberId, BigDecimal amount, UUID sellerId){
         return new PurchaseOrder(productId, memberId, amount, sellerId);
+    }
+
+    public void changeStatus(PurchaseOrderStatus newStatus){
+        this.status=newStatus;
     }
     @PrePersist
     public void onCreate() {
@@ -77,7 +89,5 @@ public class PurchaseOrder {
     public void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
-
 
 }
