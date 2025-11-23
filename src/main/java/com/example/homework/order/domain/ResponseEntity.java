@@ -1,4 +1,4 @@
-package com.example.homework.entity;
+package com.example.homework.order.domain;
 
 import lombok.Data;
 
