@@ -5,8 +5,7 @@ import com.example.homework.order.application.dto.OrderInfo;
 import com.example.homework.order.domain.OrderRepository;
 import com.example.homework.order.domain.PurchaseOrder;
 import com.example.homework.order.domain.PurchaseOrderStatus;
-import com.example.homework.order.domain.ResponseEntity;
-import com.example.homework.order.presentation.dto.OrderRequest;
+import com.example.homework.Common.ResponseEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +29,8 @@ public class OrderService {
                 command.productId(),
                 command.memberId(),
                 command.amount(),
-                command.sellerId()
+                UUID.fromString("837d0c0e-9146-4b2f-aea4-ea356468c027")
+//                command.sellerId()
         );
         PurchaseOrder purchased=orderRepository.save(order);
         return new ResponseEntity<>(HttpStatus.CREATED.value(), OrderInfo.from(purchased),1 );
@@ -43,6 +42,11 @@ public class OrderService {
                 map(OrderInfo::from)
                 .toList();
         return new ResponseEntity<>(HttpStatus.OK.value(), order, ordersPage.getTotalElements());
+    }
+
+    public PurchaseOrder findById(UUID orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found: " + orderId));
     }
 
     public ResponseEntity<OrderInfo> paid(String id) {
@@ -66,5 +70,9 @@ public class OrderService {
         }else{
             throw new IllegalArgumentException("order not found id: "+id);
         }
+    }
+
+    public void markPaid(PurchaseOrder order) {
+        order.changeStatus(PurchaseOrderStatus.PAID);
     }
 }

@@ -47,11 +47,11 @@
                 throw new Error('TossPayments is not defined. 스크립트가 로드되었는지 확인하세요.');
             }
 
-            const clientKey = 'test_ck_GePWvyJnrK4jNz4RY2bq8gLzN97E'; // 테스트 클라이언트 키
+            const clientKey = 'test_ck_KNbdOvk5rkWyQXl1nX2Arn07xlzm'; // 테스트 클라이언트 키
             const tossPayments = window.TossPayments(clientKey);
             const amount = 1000;
 
-            document.getElementById('pay-button').addEventListener('click', async function () {
+             document.getElementById('pay-button').addEventListener('click', async function () {
                 const orderId = await createOrder();
                 if (!orderId) {
                     return;

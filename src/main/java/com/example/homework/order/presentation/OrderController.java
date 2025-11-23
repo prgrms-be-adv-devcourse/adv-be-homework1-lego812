@@ -3,8 +3,7 @@ package com.example.homework.order.presentation;
 
 import com.example.homework.order.application.OrderService;
 import com.example.homework.order.application.dto.OrderInfo;
-import com.example.homework.order.domain.ResponseEntity;
-import com.example.homework.order.domain.PurchaseOrder;
+import com.example.homework.Common.ResponseEntity;
 import com.example.homework.order.presentation.dto.OrderRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
